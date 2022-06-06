@@ -7,4 +7,5 @@ export const LINE_MESSAGING_CHANNEL_SECRET = process.env.LINE_MESSAGING_CHANNEL_
 
 // imageUrl
 
+export const DATABASE_URL = process.env.DATABASE_URL as string
 export const STORAGE_BUCKET = process.env.STORAGE_BUCKET as string

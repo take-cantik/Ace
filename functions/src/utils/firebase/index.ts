@@ -1,8 +1,9 @@
 import admin from 'firebase-admin'
-import { STORAGE_BUCKET } from '../secrets'
+import { DATABASE_URL, STORAGE_BUCKET } from '../secrets'
 
 const firebaseAdminOptions: admin.AppOptions = {
   credential: admin.credential.applicationDefault(),
+  databaseURL: DATABASE_URL,
   storageBucket: STORAGE_BUCKET
 }
 
