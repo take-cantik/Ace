@@ -1,5 +1,5 @@
 import { MessageEvent, TextEventMessage } from '@line/bot-sdk'
-import { storage } from '~/utils/firebase'
+import { db, storage } from '~/utils/firebase'
 import { lineClient } from '~/utils/line'
 import { errorLogger } from '~/utils/util'
 
@@ -12,6 +12,8 @@ export const messageTextHandler = async (event: MessageEvent): Promise<void> => 
     const { text } = event.message as TextEventMessage
 
     if (text.includes('敗北者')) {
+      db.collection('losers').doc(event.message.id).set({ id: event.message.id })
+
       const publicUrl = storage.bucket().file('cancel.jpg').publicUrl()
 
       await lineClient.replyMessage(event.replyToken, {

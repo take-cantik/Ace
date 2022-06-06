@@ -1,17 +1,18 @@
 import { UnsendEvent } from '@line/bot-sdk'
-import { storage } from '~/utils/firebase'
+import { db, storage } from '~/utils/firebase'
 import { lineClient } from '~/utils/line'
 import { errorLogger } from '~/utils/util'
 
 export const unsendHandler = async (event: UnsendEvent): Promise<void> => {
   try {
     const unsendMessageId = event.unsend.messageId
-    console.log(unsendMessageId)
-    // DBからmessage調べる
+    const doc = db.collection('losers').doc(unsendMessageId)
+    const ref = await doc.get()
 
-    const text = 'test敗北者'
-    if (text.includes('敗北者')) {
-      const publicUrl = storage.bucket().file('cancel.jpg').publicUrl()
+    if (ref.data()) {
+      await doc.delete()
+
+      const publicUrl = storage.bucket().file('thanks.jpg').publicUrl()
 
       const returnId =
         event.source.type === 'group'
